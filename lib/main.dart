@@ -25,12 +25,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
         scaffoldBackgroundColor: Color(0xFFFFF2F6), // light pink background
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFFA1356A),
+          backgroundColor: Colors.pink,
           foregroundColor: Colors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFFA1356A),
+            backgroundColor: Colors.pink,
           ),
         ),
       ),

@@ -9,6 +9,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   final TextEditingController dateCtrl = TextEditingController();
   final TextEditingController timeCtrl = TextEditingController();
   final TextEditingController locationCtrl = TextEditingController();
+  final TextEditingController messageCtrl = TextEditingController();
 
   bool isWalkIn = false;
   bool isPickup = false;
@@ -29,6 +30,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     dateCtrl.dispose();
     timeCtrl.dispose();
     locationCtrl.dispose();
+    messageCtrl.dispose();
     super.dispose();
   }
 
@@ -61,8 +63,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
       return;
     }
 
+    if (messageCtrl.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter a message for the schedule.")),
+      );
+      return;
+    }
+
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Schedule submitted for $selectedService!")),
+      SnackBar(content: Text("Schedule submitted for $selectedService! Message: ${messageCtrl.text}")),
     );
   }
 
@@ -167,6 +176,15 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ),
               ),
             ],
+            SizedBox(height: 16),
+            TextField(
+              controller: messageCtrl,
+              decoration: InputDecoration(
+                labelText: 'Message for Schedule (optional)',
+                prefixIcon: Icon(Icons.message),
+              ),
+              maxLines: 2,
+            ),
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: confirmSchedule,
