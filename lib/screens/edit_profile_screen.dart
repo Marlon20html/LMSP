@@ -24,7 +24,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController nameCtrl;
   late TextEditingController emailCtrl;
   late TextEditingController mobileCtrl;
-
   File? selectedImage;
 
   @override
@@ -47,7 +46,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<void> pickImage() async {
     final picker = ImagePicker();
     final picked = await picker.pickImage(source: ImageSource.gallery);
-
     if (picked != null) {
       setState(() {
         selectedImage = File(picked.path);
@@ -64,14 +62,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Profile updated!")),
+      const SnackBar(content: Text("Profile updated!")),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Edit Profile")),
+      appBar: AppBar(title: const Text("Edit Profile")),
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
@@ -81,10 +79,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 CircleAvatar(
                   radius: 50,
-                  backgroundColor: Color(0xFFF8BBD0),
+                  backgroundColor: const Color(0xFFF8BBD0),
                   backgroundImage: selectedImage != null ? FileImage(selectedImage!) : null,
                   child: selectedImage == null
-                      ? Icon(Icons.person, size: 50, color: Color(0xFFA1356A))
+                      ? const Icon(Icons.person, size: 50, color: Color(0xFFA1356A))
                       : null,
                 ),
                 Positioned(
@@ -92,7 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   right: 4,
                   child: GestureDetector(
                     onTap: pickImage,
-                    child: CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 14,
                       backgroundColor: Colors.white,
                       child: Icon(Icons.edit, size: 16, color: Colors.grey),
@@ -105,28 +103,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           const SizedBox(height: 24),
           TextField(
             controller: nameCtrl,
-            decoration: InputDecoration(labelText: 'Full Name'),
+            decoration: const InputDecoration(labelText: 'Full Name'),
           ),
           const SizedBox(height: 16),
           TextField(
             controller: mobileCtrl,
-            decoration: InputDecoration(labelText: 'Mobile Number'),
+            decoration: const InputDecoration(labelText: 'Mobile Number'),
             keyboardType: TextInputType.phone,
           ),
           const SizedBox(height: 16),
           TextField(
             controller: emailCtrl,
-            decoration: InputDecoration(labelText: 'Email Address'),
+            decoration: const InputDecoration(labelText: 'Email Address'),
             keyboardType: TextInputType.emailAddress,
           ),
           const SizedBox(height: 32),
           ElevatedButton(
             onPressed: saveProfile,
-            child: Text("Save"),
             style: ElevatedButton.styleFrom(
-              minimumSize: Size.fromHeight(50),
-              backgroundColor: Color(0xFFC74385),
+              minimumSize: const Size.fromHeight(50),
+              backgroundColor: const Color(0xFFA1356A),
             ),
+            child: const Text("Save"),
           ),
         ],
       ),

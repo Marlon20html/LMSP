@@ -1,81 +1,81 @@
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
-
-  final List<String> messages = [
-    "Hello, how can I help you?",
+  final List<String> _messages = [
+    "Hi! How can we assist you today?",
+    "Do you have questions about your laundry?",
   ];
 
-  void sendMessage() {
-    final text = _messageController.text.trim();
+  void _sendMessage() {
+    String text = _messageController.text.trim();
     if (text.isNotEmpty) {
       setState(() {
-        messages.add(text);
-        _messageController.clear();
+        _messages.add(text);
       });
+      _messageController.clear();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Chat")),
+      appBar: AppBar(
+        title: const Text('Chat Support'),
+      ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(16),
-              itemCount: messages.length,
+              itemCount: _messages.length,
               itemBuilder: (context, index) {
-                bool isUser = index != 0;
+                final isUser = index >= 2; // mock: first 2 are "admin"
                 return Align(
-                  alignment:
-                      isUser ? Alignment.centerRight : Alignment.centerLeft,
+                  alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
                   child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 6),
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
                     decoration: BoxDecoration(
-                      color: isUser
-                          ? Color(0xFFF8BBD0) // light pink user message
-                          : Color(0xFFFFF2DC), // light peach for support
-                      borderRadius: BorderRadius.circular(16),
+                      color: isUser ? const Color(0xFFA1356A) : Colors.grey[300],
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text(messages[index],
-                        style: TextStyle(color: Colors.black87)),
+                    child: Text(
+                      _messages[index],
+                      style: TextStyle(
+                        color: isUser ? Colors.white : Colors.black,
+                      ),
+                    ),
                   ),
                 );
               },
             ),
           ),
-          Divider(height: 1),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          const Divider(height: 1),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            color: Colors.white,
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    decoration: InputDecoration(
-                      hintText: "Type your message...",
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    decoration: const InputDecoration(
+                      hintText: 'Type your message...',
+                      border: InputBorder.none,
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
                 IconButton(
-                  icon: Icon(Icons.send, color: Color(0xFFA1356A)),
-                  onPressed: sendMessage,
+                  icon: const Icon(Icons.send, color: Color(0xFFA1356A)),
+                  onPressed: _sendMessage,
                 ),
               ],
             ),

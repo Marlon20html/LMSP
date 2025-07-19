@@ -3,47 +3,50 @@ import 'package:flutter/material.dart';
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});
 
-  void showLogoutDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Color(0xFFFFF2DC),
-        title: Text("Logout", style: TextStyle(color: Color(0xFFA1356A))),
-        content: Text("Are you sure you want to logout?"),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text("Cancel"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-            },
-            child: Text("Logout"),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFFA1356A),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Admin Dashboard")),
-      body: Center(
-        child: ElevatedButton.icon(
-          onPressed: () => showLogoutDialog(context),
-          icon: Icon(Icons.logout),
-          label: Text("Logout"),
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-            backgroundColor: Color(0xFFA1356A),
-            foregroundColor: Colors.white,
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          ListTile(
+            leading: Icon(Icons.local_laundry_service, color: Colors.pink),
+            title: Text("Manage Services"),
+            onTap: () => Navigator.pushNamed(context, '/admin-services'),
           ),
-        ),
+          ListTile(
+            leading: Icon(Icons.list_alt, color: Colors.pink),
+            title: Text("View Orders"),
+            onTap: () => Navigator.pushNamed(context, '/admin-orders'),
+          ),
+          ListTile(
+            leading: Icon(Icons.price_change, color: Colors.pink),
+            title: Text("Manage Prices"),
+            onTap: () => Navigator.pushNamed(context, '/admin-prices'),
+          ),
+          ListTile(
+            leading: Icon(Icons.bar_chart, color: Colors.pink),
+            title: Text("Reports by Branch"),
+            onTap: () => Navigator.pushNamed(context, '/admin-reports'),
+          ),
+          ListTile(
+            leading: Icon(Icons.account_circle, color: Colors.pink),
+            title: Text("Admin Accounts"),
+            onTap: () => Navigator.pushNamed(context, '/admin-accounts'),
+          ),
+          ListTile(
+            leading: Icon(Icons.feedback, color: Colors.pink),
+            title: Text("Customer Feedback"),
+            onTap: () => Navigator.pushNamed(context, '/admin-feedback'),
+          ),
+          const Divider(),
+          ListTile(
+            leading: Icon(Icons.logout, color: Colors.red),
+            title: Text("Logout", style: TextStyle(color: Colors.red)),
+            onTap: () => Navigator.pushNamedAndRemoveUntil(context, '/', (r) => false),
+          ),
+        ],
       ),
     );
   }

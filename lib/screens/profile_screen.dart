@@ -12,16 +12,36 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   String name = "Name Here";
-  String mobile = "+919999999999";
-  String email = "youremail@Mail.com";
+  String mobile = "+63 999 999 9999";
+  String email = "youremail@example.com";
   File? profileImage;
 
   final List<Map<String, dynamic>> options = [
-    {'icon': Icons.location_on, 'title': "My Addresses"},
-    {'icon': Icons.history, 'title': "Transaction History"},
-    {'icon': Icons.help, 'title': "Help and Support"},
-    {'icon': Icons.description, 'title': "Terms and Conditions"},
-    {'icon': Icons.privacy_tip, 'title': "Privacy and Policy"},
+    {
+      'icon': Icons.history,
+      'title': "Transaction History",
+      'route': '/transaction_history'
+    },
+    {
+      'icon': Icons.help,
+      'title': "Help and Support",
+      'route': '/help_support'
+    },
+    {
+      'icon': Icons.description,
+      'title': "Terms and Conditions",
+      'route': '/terms'
+    },
+    {
+      'icon': Icons.privacy_tip,
+      'title': "Privacy and Policy",
+      'route': '/privacy'
+    },
+    {
+      'icon': Icons.star_rate,
+      'title': "Rate Our Services",
+      'route': '/rate'
+    },
   ];
 
   void showLogoutDialog(BuildContext context) {
@@ -40,8 +60,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () {
               Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
             },
-            child: const Text("Logout"),
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFA1356A)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFA1356A),
+            ),
+            child: const Text(
+              "Logout",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -71,6 +96,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  void onOptionTap(String route) {
+    Navigator.pushNamed(context, route);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +112,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               CircleAvatar(
                 radius: 45,
                 backgroundColor: const Color(0xFFF8BBD0),
-                backgroundImage: profileImage != null ? FileImage(profileImage!) : null,
+                backgroundImage:
+                    profileImage != null ? FileImage(profileImage!) : null,
                 child: profileImage == null
                     ? const Icon(Icons.person, size: 50, color: Color(0xFFA1356A))
                     : null,
@@ -106,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               leading: Icon(item['icon'], color: const Color(0xFFA1356A)),
               title: Text(item['title'], style: const TextStyle(fontWeight: FontWeight.w500)),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {},
+              onTap: () => onOptionTap(item['route']),
             );
           }).toList(),
           const Divider(),
